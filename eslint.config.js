@@ -1,6 +1,30 @@
+import jsdoc from "eslint-plugin-jsdoc";
+import parser from "@typescript-eslint/parser";
+
+export default [
+  {
+    files: ['**/*.ts'],
+    plugins: {
+      jsdoc
+    },
+    rules: {
+      'jsdoc/require-description': 'error',
+      'jsdoc/check-values': 'error'
+    }
+  },
+  {
+    // ...other config
+    languageOptions: {
+      parser
+    }
+    // ...other config
+  }
+];
+
+
 module.exports = {
-  'parser': '@typescript-eslint/parser',
-  'parserOptions': {
+  parser: '@typescript-eslint/parser',
+  parserOptions: {
     project: 'tsconfig.json',
     tsconfigRootDir: __dirname,
     sourceType: 'module',
@@ -17,7 +41,7 @@ module.exports = {
   settings: {
     'import/resolver': {
       'node': {
-        'extensions': ['.js', '.jsx', '.ts', '.tsx']
+        'extensions': ['.js', '.mjs', '.ts', '.mts']
       }
     }
   },
