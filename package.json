@@ -2,10 +2,10 @@
   "name": "workshop",
   "version": "0.0.1",
   "description": "",
-  "main": "src/index.ts",
+  "main": "src/server.ts",
   "type": "commonjs",
   "scripts": {
-    "start": "nodemon src/index.ts",
+    "start": "nodemon index.ts",
     "lint": "eslint --quiet ./",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
