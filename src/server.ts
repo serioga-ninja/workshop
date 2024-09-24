@@ -2,6 +2,7 @@ import * as express from 'express';
 import { Express } from 'express';
 import helmet from 'helmet';
 import * as http from 'node:http';
+import config from './config';
 import router from './router';
 
 export default class Server {
@@ -12,7 +13,7 @@ export default class Server {
   }
 
   register() {
-    const port = 3000;
+    const port = config.PORT;
 
     this.app.use(helmet());
 
