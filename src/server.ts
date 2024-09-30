@@ -4,6 +4,7 @@ import helmet from 'helmet';
 import * as http from 'node:http';
 import config from './config';
 import router from './router';
+import { createPGConnection } from './db';
 
 export default class Server {
   app: Express;
@@ -12,12 +13,13 @@ export default class Server {
     this.app = express();
   }
 
-  register() {
+  async register() {
     const port = config.PORT;
 
     this.app.use(helmet());
-
     this.app.use('/api', router);
+
+    await createPGConnection();
 
     return new Promise<void>(resolve => {
       http.createServer(this.app).listen(port, () => {

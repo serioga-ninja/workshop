@@ -6,6 +6,11 @@
   "type": "commonjs",
   "scripts": {
     "start": "nodemon index.ts",
+    "migrate": "db-migrate --migrations-dir ./src/db/migrations",
+    "migrate:up": "npm run migrate up",
+    "migrate:down": "npm run migrate down",
+    "migrate:reset": "npm run migrate reset",
+    "migrate:create": "npm run migrate create",
     "lint": "eslint --quiet ./",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -25,8 +30,13 @@
   },
   "dependencies": {
     "cors": "^2.8.5",
+    "db-migrate": "^0.11.14",
+    "db-migrate-pg": "^1.5.2",
     "dotenv": "^16.4.5",
     "express": "^4.21.0",
-    "helmet": "^7.1.0"
-  }
+    "helmet": "^7.1.0",
+    "reflect-metadata": "^0.2.2",
+    "typeorm": "^0.3.20"
+  },
+  "packageManager": "pnpm@8.15.1+sha1.8adba2d20330c02d3856e18c4eb3819d1d3ca6aa"
 }
