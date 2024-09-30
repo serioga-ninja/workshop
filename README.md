@@ -6,6 +6,11 @@
 - [x] Add typescript to the project
 - [x] Add linter
 - [x] Run a server
-- [ ] Add ability to read configuration from file
-- [ ] Add logs
-- [ ] Add database
+- [x] Add ability to read configuration from file
+- [ ] Add docker compose file
+- [ ] Add typeorm db connection
+- [ ] Add migrations and repository
+- [ ] Add plugin structure + implement CRUD operations
+- [ ] Add console logs
+- [ ] Add database logs
+- [ ] Add cloudwatch logs
