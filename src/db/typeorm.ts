@@ -2,13 +2,14 @@ import 'reflect-metadata';
 
 import config from 'src/config';
 import { DataSource } from 'typeorm';
+import entities from './entities';
 
 const { DATABASE_URL } = config;
 
 export const pgdb = new DataSource({
   type: 'postgres',
   url: DATABASE_URL,
-  entities: [],
+  entities: entities,
   synchronize: false,
 });
 

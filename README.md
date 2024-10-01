@@ -8,8 +8,8 @@
 - [x] Run a server
 - [x] Add ability to read configuration from file
 - [x] Add docker compose file
-- [ ] Add typeorm db connection
-- [ ] Add migrations and repository
+- [x] Add typeorm db connection
+- [x] Add migrations and repository
 - [ ] Add plugin structure + implement CRUD operations
 - [ ] Add console logs
 - [ ] Add database logs
