@@ -14,3 +14,8 @@
 - [ ] Add console logs
 - [ ] Add database logs
 - [ ] Add cloudwatch logs
+- [ ] Add users and roles
+- [ ] Add Sign-in/Sign-up
+- [ ] Add middlewares by users for articles
+- [ ] Add article categories
+- [ ] Add article comments
