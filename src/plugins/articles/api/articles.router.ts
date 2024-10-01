@@ -1,13 +1,14 @@
 import { Request, Response, Router } from 'express';
-import { Articles } from 'src/db/entities';
-import { pgdb } from 'src/db/typeorm';
+import ArticlesRepository from '../repositories/articles.repository';
+
+const articlesRepository = new ArticlesRepository();
 
 const articlesRouter = Router();
 
 articlesRouter.get('/', async (_req: Request, res: Response) => {
-  const article = await pgdb.getRepository(Articles).findOneBy({
+  const article = await articlesRepository.findOneByOrFail({
     id: '9d062fad-00fc-46f8-8521-8324507f5f2a'
-  })
+  });
 
   res.json(article);
 });
