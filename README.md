@@ -7,7 +7,7 @@
 - [x] Add linter
 - [x] Run a server
 - [x] Add ability to read configuration from file
-- [ ] Add docker compose file
+- [x] Add docker compose file
 - [ ] Add typeorm db connection
 - [ ] Add migrations and repository
 - [ ] Add plugin structure + implement CRUD operations
