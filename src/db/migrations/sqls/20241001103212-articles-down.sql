@@ -1,1 +1,2 @@
-/* Replace with your SQL commands */
+drop type if EXISTS entity_status;
+drop table if EXISTS articles;
