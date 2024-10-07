@@ -1,7 +1,10 @@
-import Articles from './articles';
+import Articles from './Articles';
 
-const entities = [Articles];
+const entities = [
+  Articles
+];
 
 export default entities;
+
 
 export { Articles };
