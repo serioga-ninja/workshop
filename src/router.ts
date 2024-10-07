@@ -1,8 +1,18 @@
-import { Router } from 'express';
-import articlesRouter from './plugins/articles/api/articles.router';
+import { Application, Router } from 'express';
+import ArticlesApiController from './plugins/articles/api/articles-api.controller';
 
-const router = Router();
+export default class ServerRouter {
+  protected router: Router;
 
-router.use('/articles', articlesRouter);
+  constructor(
+    private readonly _articlesApiController: ArticlesApiController
+  ) {
+    this.router = Router();
+  }
 
-export default router;
+  register(app: Application) {
+    this._articlesApiController.register(this.router);
+
+    app.use('/api', this.router);
+  }
+}

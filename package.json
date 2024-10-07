@@ -6,13 +6,11 @@
   "type": "commonjs",
   "scripts": {
     "start": "nodemon index.ts",
-
     "migrate": "db-migrate --migrations-dir ./src/db/migrations",
     "migrate:up": "npm run migrate up",
     "migrate:down": "npm run migrate down",
     "migrate:reset": "npm run migrate reset",
     "migrate:create": "npm run migrate create",
-
     "lint": "eslint --quiet ./",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -24,6 +22,7 @@
     "@typescript-eslint/eslint-plugin": "^8.0.0",
     "@typescript-eslint/parser": "^8.0.0",
     "eslint": "8.57.1",
+    "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-jsdoc": "^48.11.0",
     "nodemon": "^3.1.7",
     "ts-node": "^10.9.2",
@@ -37,8 +36,8 @@
     "dotenv": "^16.4.5",
     "express": "^4.21.0",
     "helmet": "^7.1.0",
+    "pg": "^8.13.0",
     "reflect-metadata": "^0.2.2",
-    "typeorm": "^0.3.20",
-    "pg": "^8.13.0"
+    "typeorm": "^0.3.20"
   }
 }
