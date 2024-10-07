@@ -8,6 +8,7 @@
       "type": "node",
       "request": "launch",
       "name": "API",
+      "outputCapture": "std",
       "runtimeArgs": [
         "-r",
         "ts-node/register",

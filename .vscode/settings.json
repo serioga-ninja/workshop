@@ -1,5 +1,11 @@
 {
   "cSpell.words": [
     "pgdb"
-  ]
+  ],
+  "workbench.colorCustomizations": {
+    "sideBar.foreground": "#ffffff",
+    "activityBar.background": "#3E291A",
+    "titleBar.activeBackground": "#563A24",
+    "titleBar.activeForeground": "#FDFBF9"
+  }
 }
