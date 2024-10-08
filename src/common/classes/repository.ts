@@ -1,7 +1,5 @@
 import { pgdb } from 'src/db/typeorm';
-import { EntityTarget, ObjectLiteral, Repository } from 'typeorm';
-
-// test
+import type { EntityTarget, ObjectLiteral, Repository } from 'typeorm';
 
 export default abstract class RepositoryBase<Entity extends ObjectLiteral> {
   abstract model: EntityTarget<Entity>;
