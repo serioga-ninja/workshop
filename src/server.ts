@@ -1,5 +1,5 @@
 import * as express from 'express';
-import { Express } from 'express';
+import type { Express } from 'express';
 import helmet from 'helmet';
 import * as http from 'node:http';
 import config from './config';

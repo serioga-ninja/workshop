@@ -11,7 +11,7 @@
     "migrate:down": "npm run migrate down",
     "migrate:reset": "npm run migrate reset",
     "migrate:create": "npm run migrate create",
-    "lint": "eslint --quiet ./",
+    "lint": "eslint --quiet --fix ./",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -22,6 +22,7 @@
     "@typescript-eslint/eslint-plugin": "^8.0.0",
     "@typescript-eslint/parser": "^8.0.0",
     "eslint": "8.57.1",
+    "eslint-import-resolver-typescript": "^3.6.3",
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-jsdoc": "^48.11.0",
     "nodemon": "^3.1.7",

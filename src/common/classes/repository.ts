@@ -1,5 +1,5 @@
 import { pgdb } from 'src/db/typeorm';
-import { EntityTarget, ObjectLiteral, Repository } from 'typeorm';
+import type { EntityTarget, ObjectLiteral, Repository } from 'typeorm';
 
 // test
 

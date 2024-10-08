@@ -1,6 +1,6 @@
 import { randomUUID } from 'node:crypto';
 import { EntityStatus } from '../constants';
-import EntityBase from './entity-base';
+import type EntityBase from './entity-base';
 import RepositoryBase from './repository';
 
 export default abstract class RepositoryEntity<Entity extends EntityBase> extends RepositoryBase<Entity> {

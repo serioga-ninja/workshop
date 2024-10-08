@@ -1,13 +1,12 @@
-import { GetOneApiRequest } from '../types/api.types';
-import ApiController, { SuccessResponse } from './api-controller';
-import EntityBase from './entity-base';
-import EntityService from './entity-service';
+import type { GetOneApiRequest } from '../types/api.types';
+import type { SuccessResponse } from './api-controller';
+import ApiController from './api-controller';
+import type EntityBase from './entity-base';
+import type EntityService from './entity-service';
 
 export default abstract class EntityController<Entity extends EntityBase> extends ApiController {
 
-  constructor(
-    protected service: EntityService<Entity>
-  ) {
+  constructor(protected service: EntityService<Entity>) {
     super();
   }
 
@@ -16,6 +15,9 @@ export default abstract class EntityController<Entity extends EntityBase> extend
       id: request.params.id
     } as Partial<Entity>);
 
-    return this.toSuccessResponse(entity, 'Entity found');
+    return this.toSuccessResponse(
+      entity,
+      'Entity found'
+    );
   }
 }

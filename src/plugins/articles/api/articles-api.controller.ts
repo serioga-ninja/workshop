@@ -1,8 +1,8 @@
-import { Application, Router } from 'express';
-import { PathParams } from 'express-serve-static-core';
+import type { Application, Router } from 'express';
+import type { PathParams } from 'express-serve-static-core';
 import EntityController from 'src/common/classes/entity-controller';
-import { Articles } from 'src/db';
-import ArticlesCRUDService from '../services/articles-crud.service';
+import type { Articles } from 'src/db';
+import type ArticlesCRUDService from '../services/articles-crud.service';
 
 export default class ArticlesApiController extends EntityController<Articles> {
   protected override basePath: PathParams = '/articles';

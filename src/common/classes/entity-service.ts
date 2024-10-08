@@ -1,5 +1,5 @@
-import EntityBase from './entity-base';
-import RepositoryEntity from './entity-repository';
+import type EntityBase from './entity-base';
+import type RepositoryEntity from './entity-repository';
 
 export default abstract class EntityService<Entity extends EntityBase> {
   protected repository: RepositoryEntity<Entity>;

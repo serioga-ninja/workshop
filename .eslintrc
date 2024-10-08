@@ -5,12 +5,14 @@
     "sourceType": "module",
     "project": ["./tsconfig.json"]
   },
-
   "env": {
     "es6": true,
-    "browser": true,
     "node": true
   },
+  "plugins": [
+    "@typescript-eslint",
+    "import"
+  ],
   "extends": [
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
@@ -22,6 +24,11 @@
     "it": "readonly",
     "afterEach": "readonly",
     "before": "readonly"
+  },
+  "settings": {
+    "import/resolver": {
+      "typescript": {} // this loads <rootdir>/tsconfig.json to eslint
+    },
   },
   "rules": {
     "import/no-cycle": "error",
@@ -58,16 +65,6 @@
     "quotes": ["error", "single", { "allowTemplateLiterals": true }],
     "function-paren-newline": "warn",
     "function-call-argument-newline": "warn",
-    "import/extensions": [
-      "error",
-      "ignorePackages",
-      {
-        "js": "never",
-        "jsx": "never",
-        "ts": "never",
-        "tsx": "never"
-      }
-    ],
     "@typescript-eslint/lines-between-class-members": 0,
     "import/no-extraneous-dependencies": 1,
     "import/prefer-default-export": 1,

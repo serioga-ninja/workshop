@@ -1,5 +1,6 @@
-import { Application, Router } from 'express';
-import ArticlesApiController from './plugins/articles/api/articles-api.controller';
+import type { Application} from 'express';
+import { Router } from 'express';
+import type ArticlesApiController from './plugins/articles/api/articles-api.controller';
 
 export default class ServerRouter {
   protected router: Router;

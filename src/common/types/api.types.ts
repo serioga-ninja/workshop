@@ -1,5 +1,5 @@
-import { Request } from 'express';
-import { EmptyObject } from './index';
+import type { Request } from 'express';
+import type { EmptyObject } from './index';
 
 export type ApiRequest<
   P = EmptyObject,

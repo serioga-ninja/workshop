@@ -1,7 +1,8 @@
-import { Application, Request, Response, Router } from 'express';
-import { PathParams } from 'express-serve-static-core';
-import { TAny } from '../types';
-import { ApiRequest } from '../types/api.types';
+import type { Application, Request, Response } from 'express';
+import { Router } from 'express';
+import type { PathParams } from 'express-serve-static-core';
+import type { TAny } from '../types';
+import type { ApiRequest } from '../types/api.types';
 
 export type SuccessResponse<T extends (object | object[]) = object> = {
   data: T;
@@ -24,13 +25,20 @@ export default abstract class ApiController {
   }
 
   register(app: Application | Router): void {
-    app.use(this.basePath, this.router as TAny);
+    app.use(
+      this.basePath,
+      this.router as TAny
+    );
   }
 
   protected apiMethod(method: Method) {
     return async (req: Request, res: Response) => {
       try {
-        const result = await method.call(this, req, res);
+        const result = await method.call(
+          this,
+          req,
+          res
+        );
 
         res.status(400).json(result);
       } catch (error) {
