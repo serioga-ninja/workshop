@@ -1,12 +1,12 @@
-import * as express from 'express';
+import * as bodyParser from 'body-parser';
 import type { Express } from 'express';
+import * as express from 'express';
 import helmet from 'helmet';
 import * as http from 'node:http';
+import { injectable } from 'tsyringe';
 import config from './config';
 import { createPGConnection } from './db/typeorm';
 import ServerRouter from './router';
-import { injectable } from 'tsyringe';
-import * as bodyParser from 'body-parser'
 
 @injectable()
 export default class Server {
