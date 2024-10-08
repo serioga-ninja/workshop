@@ -11,6 +11,7 @@ export const pgdb = new DataSource({
   url: DATABASE_URL,
   entities: entities,
   synchronize: false,
+  logging: true
 });
 
 export const createPGConnection = () => {
@@ -26,6 +27,9 @@ export const closePGConnection = async () => {
   await pgdb.destroy();
 }
 
-process.on('exit', () => {
+process.on(
+  'exit',
+  () => {
   closePGConnection();
-});
+  }
+);

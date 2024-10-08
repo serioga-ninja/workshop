@@ -6,29 +6,39 @@ export default abstract class RepositoryBase<Entity extends ObjectLiteral> {
   abstract alias: string;
 
   async findOneBy(where: Partial<Entity>): Promise<Entity | null> {
-    return this.getRepository().findOneBy(where);
+    return await this.getRepository().findOneBy(where);
   }
 
   async findOneByOrFail(where: Partial<Entity>): Promise<Entity> {
-    return this.getRepository().findOneByOrFail(where);
+    return await this.getRepository().findOneByOrFail(where);
   }
 
   async updateOneBy(where: Partial<Entity>, data: Partial<Entity>): Promise<Entity> {
-    await this.getRepository().update(where, data);
+    await this.getRepository().update(
+      where,
+      data
+    );
 
-    return this.findOneByOrFail(where);
+    return await this.findOneByOrFail(where);
   }
 
   async createOne(data: Partial<Entity>): Promise<Entity> {
-    const { generatedMaps } = await this.getRepository().insert(data);
+    const { generatedMaps } = await this.getQueryBuilder()
+      .insert()
+      .values(data)
+      .returning('*')
+      .execute();
 
     return generatedMaps[0] as Entity;
   }
 
   async deleteOneBy(where: Partial<Entity>) {
-    return this.getRepository().delete(where);
+    return await this.getRepository().delete(where);
   }
 
+  protected getQueryBuilder() {
+    return this.getRepository().createQueryBuilder(this.alias);
+  }
 
   protected getRepository(): Repository<Entity> {
     return pgdb.getRepository(this.model);

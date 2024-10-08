@@ -3,13 +3,16 @@ import type { Express } from 'express';
 import helmet from 'helmet';
 import * as http from 'node:http';
 import config from './config';
-import router from './router';
 import { createPGConnection } from './db/typeorm';
+import ServerRouter from './router';
+import { injectable } from 'tsyringe';
+import * as bodyParser from 'body-parser'
 
+@injectable()
 export default class Server {
   app: Express;
 
-  constructor() {
+  constructor(private readonly _serverRouter: ServerRouter) {
     this.app = express();
   }
 
@@ -17,16 +20,20 @@ export default class Server {
     const port = config.PORT;
 
     this.app.use(helmet());
+    this.app.use(bodyParser.json());
 
-    this.app.use('/api', router);
+    this._serverRouter.register(this.app);
 
     await createPGConnection();
 
-    return new Promise<void>(resolve => {
-      http.createServer(this.app).listen(port, () => {
+    return await new Promise<void>(resolve => {
+      http.createServer(this.app).listen(
+        port,
+        () => {
         console.log(`Server running on port: ${port}. Open http://localhost:${port} to see the app`);
         resolve();
-      });
+        }
+      );
     })
   }
 }
