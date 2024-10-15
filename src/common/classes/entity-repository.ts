@@ -20,18 +20,18 @@ export default abstract class RepositoryEntity<Entity extends EntityBase> extend
       {
         updatedAt: new Date(),
         ...data,
-      }
-    )
+      },
+    );
   }
 
   async softDeleteOneBy(where: Partial<Entity>) {
     const data = {
-      entityStatus: EntityStatus.Deleted
+      entityStatus: EntityStatus.Deleted,
     } as Partial<Entity>;
 
     return await this.updateOneBy(
       where,
-      data
+      data,
     );
   }
 }

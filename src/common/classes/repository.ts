@@ -16,7 +16,7 @@ export default abstract class RepositoryBase<Entity extends ObjectLiteral> {
   async updateOneBy(where: Partial<Entity>, data: Partial<Entity>): Promise<Entity> {
     await this.getRepository().update(
       where,
-      data
+      data,
     );
 
     return await this.findOneByOrFail(where);

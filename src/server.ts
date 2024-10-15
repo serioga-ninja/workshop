@@ -4,7 +4,9 @@ import * as express from 'express';
 import helmet from 'helmet';
 import * as http from 'node:http';
 import { injectable } from 'tsyringe';
+import LoggerService from './common/services/logger.service';
 import config from './config';
+import MongoConnection from './db/mongo';
 import { createPGConnection } from './db/typeorm';
 import ServerRouter from './router';
 
@@ -12,7 +14,11 @@ import ServerRouter from './router';
 export default class Server {
   app: Express;
 
-  constructor(private readonly _serverRouter: ServerRouter) {
+  constructor(
+    private readonly _serverRouter: ServerRouter,
+    private readonly _mongoConnection: MongoConnection,
+    private readonly _logger: LoggerService,
+  ) {
     this.app = express();
   }
 
@@ -24,16 +30,19 @@ export default class Server {
 
     this._serverRouter.register(this.app);
 
-    await createPGConnection();
+    await Promise.all([
+      createPGConnection(),
+      this._mongoConnection.createMongoConnection(),
+    ]);
 
     return await new Promise<void>(resolve => {
       http.createServer(this.app).listen(
         port,
         () => {
-        console.log(`Server running on port: ${port}. Open http://localhost:${port} to see the app`);
-        resolve();
-        }
+          this._logger.info(`Server running on port: ${port}. Open http://localhost:${port} to see the app`);
+          resolve();
+        },
       );
-    })
+    });
   }
 }

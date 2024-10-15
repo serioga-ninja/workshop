@@ -11,9 +11,9 @@
 - [x] Add typeorm db connection
 - [x] Add migrations and repository
 - [x] Add plugin structure + implement CRUD operations
-- [ ] Add console logs
-- [ ] Add database logs
-- [ ] Add request error handling
+- [x] Add console logs
+- [x] Add database logs
+- [x] Add request error handling
 - [ ] Add users and roles
 - [ ] Add Sign-in/Sign-up
 - [ ] Add middlewares by users for articles
