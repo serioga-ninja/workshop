@@ -1,10 +1,11 @@
 import Articles from './Articles';
+import Users from './Users';
 
 const entities = [
-  Articles
+  Articles,
+  Users,
 ];
 
 export default entities;
 
-
-export { Articles };
+export { Articles, Users };

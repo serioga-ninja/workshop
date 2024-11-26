@@ -1,3 +1,4 @@
+import type { GetListPagedQuery, GetListPagedReturn } from '../types';
 import type EntityBase from './entity-base';
 import type RepositoryEntity from './entity-repository';
 
@@ -19,11 +20,15 @@ export default abstract class EntityService<Entity extends EntityBase> {
   async updateOneBy(where: Partial<Entity>, data: Partial<Entity>): Promise<Entity> {
     return await this.repository.updateOneBy(
       where,
-      data
+      data,
     );
   }
 
   async softDeleteOneBy(where: Partial<Entity>) {
     return await this.repository.softDeleteOneBy(where);
+  }
+
+  getListPaged(query: GetListPagedQuery): Promise<GetListPagedReturn<Entity>> {
+    return this.repository.getListPaged(query);
   }
 }

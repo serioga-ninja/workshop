@@ -9,9 +9,9 @@ const { DATABASE_URL } = config;
 export const pgdb = new DataSource({
   type: 'postgres',
   url: DATABASE_URL,
-  entities: entities,
+  entities,
   synchronize: false,
-  logging: true
+  logging: true,
 });
 
 export const createPGConnection = () => {
@@ -21,15 +21,15 @@ export const createPGConnection = () => {
       console.error('Typeorm pg connection error');
       console.error(error);
     });
-}
+};
 
 export const closePGConnection = async () => {
   await pgdb.destroy();
-}
+};
 
 process.on(
   'exit',
   () => {
-  closePGConnection();
-  }
+    closePGConnection();
+  },
 );

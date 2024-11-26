@@ -14,7 +14,8 @@
 - [x] Add console logs
 - [x] Add database logs
 - [x] Add request error handling
-- [ ] Add users and roles
+- [x] Add users and roles
+- [ ] Add request validations
 - [ ] Add Sign-in/Sign-up
 - [ ] Add middlewares by users for articles
 - [ ] Add article categories

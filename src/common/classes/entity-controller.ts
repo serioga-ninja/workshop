@@ -1,6 +1,6 @@
 import type LoggerService from '../services/logger.service';
-import type { TAny } from '../types';
-import type { CreateOneRequest, GetOneRequest, UpdateOneRequest } from '../types/api.types';
+import type { GetListPagedReturn, TAny } from '../types';
+import type { CreateOneRequest, GetListPagedRequest, GetOneRequest, UpdateOneRequest } from '../types/api.types';
 import type { SuccessResponse } from './api-controller';
 import ApiController from './api-controller';
 import type EntityBase from './entity-base';
@@ -43,6 +43,15 @@ export default abstract class EntityController<Entity extends EntityBase> extend
     return this.toSuccessResponse(
       entity,
       'Entity updated',
+    );
+  }
+
+  protected async getListPaged(request: GetListPagedRequest<TAny>): Promise<SuccessResponse<GetListPagedReturn<Entity>>> {
+    const result = await this.service.getListPaged(request.query);
+
+    return this.toSuccessResponse(
+      result,
+      'Entities found',
     );
   }
 

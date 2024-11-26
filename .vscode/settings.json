@@ -5,13 +5,5 @@
     "titleBar.activeBackground": "#21463E",
     "titleBar.activeForeground": "#F7FBFA"
   },
-  "cSpell.words": [
-    "pgdb"
-  ],
-  "editor.codeActionsOnSave": {
-    "source.organizeImports": "always",
-    "source.fixAll.eslint": "always",
-    "source.fixAll.tslint": "always",
-    "source.fixAll.stylelint": "always"
-  },
+  "cSpell.words": ["pgdb"]
 }
