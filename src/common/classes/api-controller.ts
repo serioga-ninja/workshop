@@ -1,4 +1,4 @@
-import type { Application, Request, Response } from 'express';
+import type { Application, NextFunction, Request, Response } from 'express';
 import { Router } from 'express';
 import type { PathParams } from 'express-serve-static-core';
 import { EntityNotFoundError } from 'typeorm';
@@ -6,7 +6,7 @@ import { ErrorStatusCode } from '../constants';
 import type LoggerService from '../services/logger.service';
 import type { TAny } from '../types';
 import type { ApiRequest } from '../types/api.types';
-import { ApiError, NotFoundError } from './errors';
+import { ApiError, ApiValidationError, NotFoundError } from './errors';
 
 export type SuccessResponse<T extends (object | object[]) = object> = {
   data: T;
@@ -14,11 +14,13 @@ export type SuccessResponse<T extends (object | object[]) = object> = {
   message?: string;
   apiStatusCode: number;
 };
+type MiddlewareMethod = (req: ApiRequest<TAny, TAny, TAny>, res: Response, next: NextFunction) => Promise<void>;
 type Method<T extends SuccessResponse | never = SuccessResponse> = (req: ApiRequest<TAny, TAny, TAny>, res: Response) => Promise<T>;
 type ErrorResponse = {
   status: 'error';
   message: string;
   statusCode?: string;
+  data: unknown;
   apiStatusCode: number;
 };
 
@@ -37,6 +39,20 @@ export default abstract class ApiController {
       this.basePath,
       this.router as TAny,
     );
+  }
+
+  protected middleware(method: MiddlewareMethod) {
+    return async (req: Request, res: Response, next: NextFunction) => {
+      try {
+        await method.call(this, req as ApiRequest<TAny, TAny, TAny>, res, next);
+      } catch (error) {
+        this.logger.error(error.message, error);
+
+        const { apiStatusCode, ...rest } = this.toErrorResponse(error);
+
+        res.status(apiStatusCode).json(rest);
+      }
+    };
   }
 
   protected apiMethod(method: Method) {
@@ -68,14 +84,22 @@ export default abstract class ApiController {
         message: 'Internal Server Error',
         statusCode: ErrorStatusCode.InternalServerError,
         apiStatusCode: 500,
+        data: {},
       };
     }
 
     let message = 'Internal Server Error';
     let statusCode = ErrorStatusCode.InternalServerError;
     let apiStatusCode = 500;
+    let data: unknown = {};
 
     switch (error.constructor) {
+      case ApiValidationError:
+        message = error.message;
+        statusCode = ErrorStatusCode.ValidationError;
+        apiStatusCode = 400;
+        data = (error as ApiValidationError).data;
+        break;
       case ApiError:
         message = error.message;
         statusCode = ErrorStatusCode.ApiError;
@@ -94,6 +118,7 @@ export default abstract class ApiController {
       message,
       statusCode,
       apiStatusCode,
+      data,
     };
   }
 

@@ -7,6 +7,8 @@ import type { SuccessResponse } from '../../../common/classes/api-controller';
 import LoggerService from '../../../common/services/logger.service';
 import ArticlesService from '../services/articles.service';
 import type { CreateOneArticleRequest, CreateOneArticleRequestBody } from '../types';
+import Middlewares from '../../../common/services/middlewares';
+import { ArticlesListSchema } from '../schemas';
 
 @injectable()
 export default class ArticlesApiController extends EntityController<Articles> {
@@ -16,12 +18,17 @@ export default class ArticlesApiController extends EntityController<Articles> {
   constructor(
     service: ArticlesService,
     logger: LoggerService,
+    private readonly _middleware: Middlewares,
   ) {
     super(service, logger);
   }
 
   override register(app: Application | Router): void {
-    this.router.get('/', this.apiMethod(this.getListPaged));
+    this.router.get(
+      '/',
+      this.middleware(this._middleware.validateQuery(ArticlesListSchema)),
+      this.apiMethod(this.getListPaged),
+    );
     this.router.get('/:id', this.apiMethod(this.getOne));
     this.router.post('/', this.apiMethod(this.createOne));
     this.router.put('/:id', this.apiMethod(this.updateOne));

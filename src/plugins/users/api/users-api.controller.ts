@@ -1,12 +1,14 @@
 import type { Application, Router } from 'express';
-import { pick } from 'lodash';
 import { injectable } from 'tsyringe';
 import type { SuccessResponse } from '../../../common/classes/api-controller';
 import EntityController from '../../../common/classes/entity-controller';
 import LoggerService from '../../../common/services/logger.service';
+import Middlewares from '../../../common/services/middlewares';
 import type { Users } from '../../../db';
+import { CreateUserSchema } from '../schemas';
 import UsersApiService from '../services/users-api.service';
-import type { CreateUserRequest, CreateUserRequestBody } from '../types';
+import type { CreateUserRequest } from '../types';
+import { IdSchema } from '../../../common/schemas';
 
 @injectable()
 export default class UsersApiController extends EntityController<Users> {
@@ -16,6 +18,7 @@ export default class UsersApiController extends EntityController<Users> {
   constructor(
     service: UsersApiService,
     logger: LoggerService,
+    private readonly _middlewares: Middlewares,
   ) {
     super(service, logger);
   }
@@ -23,10 +26,12 @@ export default class UsersApiController extends EntityController<Users> {
   override register(app: Application | Router): void {
     this.router.get(
       '/:id',
+      this.middleware(this._middlewares.validateParams(IdSchema)),
       this.apiMethod(this.getOne),
     );
     this.router.post(
       '/',
+      this.middleware(this._middlewares.validateBody(CreateUserSchema)),
       this.apiMethod(this.createOne),
     );
     this.router.put(
@@ -42,11 +47,7 @@ export default class UsersApiController extends EntityController<Users> {
   }
 
   protected override async createOne(request: CreateUserRequest): Promise<SuccessResponse<Users>> {
-    const data = pick(
-      request.body,
-      ['email', 'password', 'firstName', 'lastName'] as (keyof CreateUserRequestBody)[],
-    );
-    const user = await this.service.createOne(data);
+    const user = await this.service.createOne(request.body);
 
     return this.toSuccessResponse(user, 'Entity created');
   }

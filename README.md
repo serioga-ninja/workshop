@@ -15,10 +15,13 @@
 - [x] Add database logs
 - [x] Add request error handling
 - [x] Add users and roles
-- [ ] Add request validations
+- [x] Add request validations
+- [x] Add middlewares by users for articles
 - [ ] Add Sign-in/Sign-up
-- [ ] Add middlewares by users for articles
+- [ ] Add user upload avatar to file system
+- [ ] Add user upload avatar to s3
+- [ ] Add cloudwatch logs
+- [ ] Add server status via sockets
+- [ ] Add cron jobs
 - [ ] Add article categories
 - [ ] Add article comments
-- [ ] Add cloudwatch logs
-- [ ] Add cron jobs
