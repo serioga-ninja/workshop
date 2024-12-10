@@ -7,4 +7,10 @@ export type SignUpUserRequestBody = {
   email: string;
   password: string;
 };
+export type SignInUserRequestBody = {
+  email: string;
+  password: string;
+};
+
 export type SignUpUserRequest = ApiRequest<EmptyObject, SignUpUserRequestBody>;
+export type SignInUserRequest = ApiRequest<EmptyObject, SignInUserRequestBody>;
