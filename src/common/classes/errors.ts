@@ -17,6 +17,14 @@ export class NotFoundError extends ApiError {
   }
 }
 
+export class ServerError extends ApiError {
+  constructor(message: string) {
+    super(message);
+
+    Object.setPrototypeOf(this, ServerError.prototype);
+  }
+}
+
 export class ApiValidationError extends ApiError {
   declare data: unknown;
 

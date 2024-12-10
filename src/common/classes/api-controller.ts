@@ -13,8 +13,11 @@ export type SuccessResponse<T extends (object | object[]) = object> = {
   message?: string;
   apiStatusCode: number;
 };
-type MiddlewareMethod = (req: ApiRequest<TAny, TAny, TAny>, res: Response, next: NextFunction) => Promise<void>;
-type Method<T extends SuccessResponse | never = SuccessResponse> = (req: ApiRequest<TAny, TAny, TAny>, res: Response) => Promise<T>;
+export type MiddlewareMethod<T extends ApiRequest<TAny, TAny, TAny> = TAny> = (req: T, res: Response, next: NextFunction) => Promise<void>;
+type Method<
+  Req extends ApiRequest<TAny, TAny, TAny> = TAny,
+  T extends SuccessResponse | never = SuccessResponse,
+> = (req: Req, res: Response) => Promise<T>;
 type ErrorResponse = {
   status: 'error';
   message: string;

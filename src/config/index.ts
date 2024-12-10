@@ -6,6 +6,7 @@ export type Config = {
   DATABASE_URL: string;
   NODE_ENV: Environment;
   MONGO_DATABASE_URL: string;
+  JWT_SECRET: string;
   MONGO_LOGS: boolean;
 };
 
@@ -15,6 +16,7 @@ const {
   NODE_ENV,
   MONGO_DATABASE_URL,
   MONGO_LOGS,
+  JWT_SECRET,
 } = process.env;
 
 const config = {
@@ -23,6 +25,7 @@ const config = {
   NODE_ENV: NODE_ENV || '',
   MONGO_DATABASE_URL: MONGO_DATABASE_URL || '',
   MONGO_LOGS: MONGO_LOGS === '1',
+  JWT_SECRET: JWT_SECRET || '',
 };
 
 export default config as Config;

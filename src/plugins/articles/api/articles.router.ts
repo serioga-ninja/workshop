@@ -8,6 +8,7 @@ import Middlewares from '../../../common/services/middlewares';
 import { ArticlesListSchema } from '../schemas';
 import ArticlesService from '../services/articles.service';
 import type { CreateOneArticleRequest, CreateOneArticleRequestBody } from '../types';
+import AuthMiddleware from '../../auth/api/auth.middleware';
 
 @injectable()
 export default class ArticlesApiController extends EntityController<Articles> {
@@ -17,6 +18,7 @@ export default class ArticlesApiController extends EntityController<Articles> {
     service: ArticlesService,
     logger: LoggerService,
     private readonly _middleware: Middlewares,
+    private readonly _authMiddleware: AuthMiddleware,
   ) {
     super(service, logger);
   }
@@ -24,6 +26,7 @@ export default class ArticlesApiController extends EntityController<Articles> {
   override register() {
     this.get(
       '/',
+      this._authMiddleware.requireAuth(),
       this._middleware.validateQuery(ArticlesListSchema),
       this.getListPaged,
     );

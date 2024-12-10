@@ -3,6 +3,7 @@ import LoggerService from '../../../common/services/logger.service';
 import UsersRepository from '../../users/repositories/users.repository';
 import { ApiError } from '../../../common/classes/errors';
 import PasswordService from '../../users/services/password.service';
+import JWTService from '../../../common/services/jwt.service';
 
 type SignInData = {
   email: string;
@@ -17,6 +18,7 @@ export default class SignIn {
     logger: LoggerService,
     private readonly _usersRepository: UsersRepository,
     private readonly _passwordService: PasswordService,
+    private readonly _JWTService: JWTService,
   ) {
     this._logger = logger.createChild('SignIn');
   }
@@ -40,6 +42,10 @@ export default class SignIn {
 
     this._logger.info(`User with email: ${data.email} successfully signed in`);
 
-    return user;
+    const token = this._JWTService.generateToken({ id: user.id }, '360d');
+
+    return {
+      token,
+    };
   }
 }

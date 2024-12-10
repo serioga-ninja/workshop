@@ -17,7 +17,8 @@
 - [x] Add users and roles
 - [x] Add request validations
 - [x] Add middlewares by users for articles
-- [ ] Add Sign-in/Sign-up
+- [x] Add Sign-in/Sign-up
+- [ ] Add session cache
 - [ ] Add user upload avatar to file system
 - [ ] Add user upload avatar to s3
 - [ ] Add cloudwatch logs
