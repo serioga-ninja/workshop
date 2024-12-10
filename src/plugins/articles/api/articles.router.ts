@@ -22,15 +22,15 @@ export default class ArticlesApiController extends EntityController<Articles> {
   }
 
   override register() {
-    this.router.get(
+    this.get(
       '/',
-      this.middleware(this._middleware.validateQuery(ArticlesListSchema)),
-      this.apiMethod(this.getListPaged),
+      this._middleware.validateQuery(ArticlesListSchema),
+      this.getListPaged,
     );
-    this.router.get('/:id', this.apiMethod(this.getOne));
-    this.router.post('/', this.apiMethod(this.createOne));
-    this.router.put('/:id', this.apiMethod(this.updateOne));
-    this.router.delete('/:id', this.apiMethod(this.deleteOne));
+    this.get('/:id', this.getOne);
+    this.post('/', this.createOne);
+    this.put('/:id', this.updateOne);
+    this.delete('/:id', this.deleteOne);
 
     return super.register();
   }

@@ -125,4 +125,54 @@ export default abstract class ApiController {
       apiStatusCode: 200,
     };
   }
+
+  protected get(path: string, ...rest: (MiddlewareMethod | Method)[]) {
+    const { method, middlewares } = this.parseMethods(rest);
+
+    this.router.get(
+      path,
+      ...middlewares,
+      method,
+    );
+  }
+
+  protected post(path: string, ...rest: (MiddlewareMethod | Method)[]) {
+    const { method, middlewares } = this.parseMethods(rest);
+
+    this.router.post(
+      path,
+      ...middlewares,
+      method,
+    );
+  }
+
+  protected put(path: string, ...rest: (MiddlewareMethod | Method)[]) {
+    const { method, middlewares } = this.parseMethods(rest);
+
+    this.router.put(
+      path,
+      ...middlewares,
+      method,
+    );
+  }
+
+  protected delete(path: string, ...rest: (MiddlewareMethod | Method)[]) {
+    const { method, middlewares } = this.parseMethods(rest);
+
+    this.router.delete(
+      path,
+      ...middlewares,
+      method,
+    );
+  }
+
+  private parseMethods(rest: (MiddlewareMethod | Method)[]) {
+    const middlewares = rest.slice(0, -1).map((fn) => this.middleware(fn as MiddlewareMethod));
+    const method = this.apiMethod(rest.at(-1)?.bind(this) as Method);
+
+    return {
+      middlewares,
+      method,
+    };
+  }
 }

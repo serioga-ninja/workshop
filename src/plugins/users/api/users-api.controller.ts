@@ -22,23 +22,23 @@ export default class UsersApiController extends EntityController<Users> {
   }
 
   override register() {
-    this.router.get(
+    this.get(
       '/:id',
-      this.middleware(this._middlewares.validateParams(IdSchema)),
-      this.apiMethod(this.getOne),
+      this._middlewares.validateParams(IdSchema),
+      this.getOne,
     );
-    this.router.post(
+    this.post(
       '/',
-      this.middleware(this._middlewares.validateBody(CreateUserSchema)),
-      this.apiMethod(this.createOne),
+      this._middlewares.validateBody(CreateUserSchema),
+      this.createOne,
     );
-    this.router.put(
+    this.put(
       '/:id',
-      this.apiMethod(this.updateOne),
+      this.updateOne,
     );
-    this.router.delete(
+    this.delete(
       '/:id',
-      this.apiMethod(this.deleteOne),
+      this.deleteOne,
     );
 
     return super.register();
