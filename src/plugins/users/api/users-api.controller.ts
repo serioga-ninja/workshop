@@ -1,18 +1,16 @@
-import type { Application, Router } from 'express';
 import { injectable } from 'tsyringe';
 import type { SuccessResponse } from '../../../common/classes/api-controller';
 import EntityController from '../../../common/classes/entity-controller';
+import { IdSchema } from '../../../common/schemas';
 import LoggerService from '../../../common/services/logger.service';
 import Middlewares from '../../../common/services/middlewares';
 import type { Users } from '../../../db';
 import { CreateUserSchema } from '../schemas';
 import UsersApiService from '../services/users-api.service';
 import type { CreateUserRequest } from '../types';
-import { IdSchema } from '../../../common/schemas';
 
 @injectable()
 export default class UsersApiController extends EntityController<Users> {
-  protected override basePath = '/users';
   declare protected service: UsersApiService;
 
   constructor(
@@ -23,7 +21,7 @@ export default class UsersApiController extends EntityController<Users> {
     super(service, logger);
   }
 
-  override register(app: Application | Router): void {
+  override register() {
     this.router.get(
       '/:id',
       this.middleware(this._middlewares.validateParams(IdSchema)),
@@ -43,7 +41,7 @@ export default class UsersApiController extends EntityController<Users> {
       this.apiMethod(this.deleteOne),
     );
 
-    super.register(app);
+    return super.register();
   }
 
   protected override async createOne(request: CreateUserRequest): Promise<SuccessResponse<Users>> {

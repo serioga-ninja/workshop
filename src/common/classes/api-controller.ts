@@ -1,6 +1,5 @@
-import type { Application, NextFunction, Request, Response } from 'express';
+import type { NextFunction, Request, Response } from 'express';
 import { Router } from 'express';
-import type { PathParams } from 'express-serve-static-core';
 import { EntityNotFoundError } from 'typeorm';
 import { ErrorStatusCode } from '../constants';
 import type LoggerService from '../services/logger.service';
@@ -25,7 +24,6 @@ type ErrorResponse = {
 };
 
 export default abstract class ApiController {
-  protected abstract basePath: PathParams;
   protected router: Router;
   protected logger: LoggerService;
 
@@ -34,11 +32,8 @@ export default abstract class ApiController {
     this.logger = logger.createChild(this.constructor.name);
   }
 
-  register(app: Application | Router): void {
-    app.use(
-      this.basePath,
-      this.router as TAny,
-    );
+  register(): Router {
+    return this.router;
   }
 
   protected middleware(method: MiddlewareMethod) {

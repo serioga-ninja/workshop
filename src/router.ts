@@ -1,4 +1,3 @@
-import type { Application } from 'express';
 import { Router } from 'express';
 import { injectable } from 'tsyringe';
 import ArticlesApiController from './plugins/articles/api/articles.router';
@@ -15,13 +14,10 @@ export default class ServerRouter {
     this.router = Router();
   }
 
-  register(app: Application) {
-    this._articlesApiController.register(this.router);
-    this._usersApiController.register(this.router);
+  register() {
+    this.router.use('/articles', this._articlesApiController.register());
+    this.router.use('/users', this._usersApiController.register());
 
-    app.use(
-      '/api',
-      this.router,
-    );
+    return this.router;
   }
 }

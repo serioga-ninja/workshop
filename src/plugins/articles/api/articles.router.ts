@@ -1,18 +1,16 @@
-import type { Application, Router } from 'express';
 import { pick } from 'lodash';
 import EntityController from 'src/common/classes/entity-controller';
 import type { Articles } from 'src/db';
 import { injectable } from 'tsyringe';
 import type { SuccessResponse } from '../../../common/classes/api-controller';
 import LoggerService from '../../../common/services/logger.service';
-import ArticlesService from '../services/articles.service';
-import type { CreateOneArticleRequest, CreateOneArticleRequestBody } from '../types';
 import Middlewares from '../../../common/services/middlewares';
 import { ArticlesListSchema } from '../schemas';
+import ArticlesService from '../services/articles.service';
+import type { CreateOneArticleRequest, CreateOneArticleRequestBody } from '../types';
 
 @injectable()
 export default class ArticlesApiController extends EntityController<Articles> {
-  protected override basePath = '/articles';
   declare protected service: ArticlesService;
 
   constructor(
@@ -23,7 +21,7 @@ export default class ArticlesApiController extends EntityController<Articles> {
     super(service, logger);
   }
 
-  override register(app: Application | Router): void {
+  override register() {
     this.router.get(
       '/',
       this.middleware(this._middleware.validateQuery(ArticlesListSchema)),
@@ -34,7 +32,7 @@ export default class ArticlesApiController extends EntityController<Articles> {
     this.router.put('/:id', this.apiMethod(this.updateOne));
     this.router.delete('/:id', this.apiMethod(this.deleteOne));
 
-    super.register(app);
+    return super.register();
   }
 
   protected override async createOne(request: CreateOneArticleRequest): Promise<SuccessResponse<Articles>> {
