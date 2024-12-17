@@ -34,6 +34,7 @@ export default class UsersRepository extends RepositoryEntity<Users> {
         email: true,
         password: true,
         salt: true,
+        emailConfirmedAt: true,
       },
     });
   }

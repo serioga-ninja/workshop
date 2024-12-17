@@ -9,6 +9,7 @@ import config from './config';
 import MongoConnection from './db/mongo';
 import { createPGConnection } from './db/typeorm';
 import ServerRouter from './router';
+import AuthModule from './plugins/auth/auth.module';
 
 @injectable()
 export default class Server {
@@ -17,6 +18,7 @@ export default class Server {
   constructor(
     private readonly _serverRouter: ServerRouter,
     private readonly _mongoConnection: MongoConnection,
+    private readonly _authModule: AuthModule,
     private readonly _logger: LoggerService,
   ) {
     this.app = express();
@@ -39,6 +41,7 @@ export default class Server {
       http.createServer(this.app).listen(
         port,
         () => {
+          this._authModule.load();
           this._logger.info(`Server running on port: ${port}. Open http://localhost:${port} to see the app`);
           resolve();
         },

@@ -36,6 +36,14 @@ export default class LoggerService {
     );
   }
 
+  logError(error: unknown): void {
+    if (error instanceof Error) {
+      this._logger.error(error.message, error);
+    } else {
+      this._logger.error(error);
+    }
+  }
+
   createChild(module: string): LoggerService {
     return new LoggerService(this._logger.child({ module }));
   }

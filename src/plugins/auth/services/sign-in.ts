@@ -34,6 +34,10 @@ export default class SignIn {
       throw new ApiError('User with provided email or password not found');
     }
 
+    if (!user.emailConfirmedAt) {
+      throw new ApiError(`User with email: ${data.email} not confirmed`);
+    }
+
     if (!this._passwordService.comparePasswords(data.password, user.salt, user.password)) {
       this._logger.error(`Incorrect password for user with email: ${data.email}`);
 

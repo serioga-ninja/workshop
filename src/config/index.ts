@@ -14,6 +14,11 @@ export type Config = {
   REDIS_URL: string;
   JWT_SECRET: string;
   MONGO_LOGS: boolean;
+  APP_URL: string;
+
+  MAILGUN_API_KEY: string;
+  MAILGUN_DOMAIN: string;
+  MAILGUN_EMAIL_FROM: string;
 };
 
 const {
@@ -24,6 +29,10 @@ const {
   REDIS_URL,
   MONGO_LOGS,
   JWT_SECRET,
+  MAILGUN_API_KEY,
+  MAILGUN_DOMAIN,
+  MAILGUN_EMAIL_FROM,
+  APP_URL,
 } = process.env;
 
 const config = {
@@ -34,6 +43,10 @@ const config = {
   MONGO_LOGS: MONGO_LOGS === '1',
   JWT_SECRET: JWT_SECRET || '',
   REDIS_URL: REDIS_URL || '',
+  MAILGUN_API_KEY: MAILGUN_API_KEY || '',
+  MAILGUN_DOMAIN: MAILGUN_DOMAIN || '',
+  MAILGUN_EMAIL_FROM: MAILGUN_EMAIL_FROM || '',
+  APP_URL: APP_URL || '',
 };
 
 export default config as Config;

@@ -1,11 +1,11 @@
-import type { NextFunction, Request, Response } from 'express';
+import type { NextFunction, Response } from 'express';
 import { Router } from 'express';
 import { EntityNotFoundError } from 'typeorm';
 import { ErrorStatusCode } from '../constants';
 import type LoggerService from '../services/logger.service';
-import type { TAny } from '../types';
 import type { ApiRequest } from '../types/api.types';
 import { ApiError, ApiValidationError, NotFoundError } from './errors';
+import type { TAny } from '../types';
 
 export type SuccessResponse<T extends (object | object[]) = object> = {
   data: T;
@@ -13,9 +13,9 @@ export type SuccessResponse<T extends (object | object[]) = object> = {
   message?: string;
   apiStatusCode: number;
 };
-export type MiddlewareMethod<T extends ApiRequest<TAny, TAny, TAny> = TAny> = (req: T, res: Response, next: NextFunction) => Promise<void>;
-type Method<
-  Req extends ApiRequest<TAny, TAny, TAny> = TAny,
+export type MiddlewareMethod<T extends ApiRequest = ApiRequest<TAny, TAny, TAny>> = (req: T, res: Response, next: NextFunction) => Promise<void>;
+export type Method<
+  Req extends ApiRequest = ApiRequest<TAny, TAny, TAny>,
   T extends SuccessResponse | never = SuccessResponse,
 > = (req: Req, res: Response) => Promise<T>;
 type ErrorResponse = {
@@ -25,6 +25,7 @@ type ErrorResponse = {
   data: unknown;
   apiStatusCode: number;
 };
+type RestMethodsType = [...MiddlewareMethod<TAny>[], Method<TAny, TAny>];
 
 export default abstract class ApiController {
   protected router: Router;
@@ -40,11 +41,11 @@ export default abstract class ApiController {
   }
 
   protected middleware(method: MiddlewareMethod) {
-    return async (req: Request, res: Response, next: NextFunction) => {
+    return async (req: ApiRequest, res: Response, next: NextFunction) => {
       try {
-        await method.call(this, req as ApiRequest<TAny, TAny, TAny>, res, next);
+        await method.call(this, req, res, next);
       } catch (error) {
-        this.logger.error(error.message, error);
+        this.logger.logError(error);
 
         const { apiStatusCode, ...rest } = this.toErrorResponse(error);
 
@@ -54,7 +55,7 @@ export default abstract class ApiController {
   }
 
   protected apiMethod(method: Method) {
-    return async (req: Request, res: Response) => {
+    return async (req: ApiRequest, res: Response) => {
       try {
         const { apiStatusCode, ...result } = await method.call(
           this,
@@ -64,7 +65,7 @@ export default abstract class ApiController {
 
         res.status(apiStatusCode).json(result);
       } catch (error) {
-        this.logger.error(error.message, error);
+        this.logger.logError(error);
 
         const { apiStatusCode, ...rest } = this.toErrorResponse(error);
 
@@ -129,7 +130,7 @@ export default abstract class ApiController {
     };
   }
 
-  protected get(path: string, ...rest: (MiddlewareMethod | Method)[]) {
+  protected get(path: string, ...rest: RestMethodsType) {
     const { method, middlewares } = this.parseMethods(rest);
 
     this.router.get(
@@ -139,7 +140,7 @@ export default abstract class ApiController {
     );
   }
 
-  protected post(path: string, ...rest: (MiddlewareMethod | Method)[]) {
+  protected post(path: string, ...rest: RestMethodsType) {
     const { method, middlewares } = this.parseMethods(rest);
 
     this.router.post(
@@ -149,7 +150,7 @@ export default abstract class ApiController {
     );
   }
 
-  protected put(path: string, ...rest: (MiddlewareMethod | Method)[]) {
+  protected put(path: string, ...rest: RestMethodsType) {
     const { method, middlewares } = this.parseMethods(rest);
 
     this.router.put(
@@ -159,7 +160,7 @@ export default abstract class ApiController {
     );
   }
 
-  protected delete(path: string, ...rest: (MiddlewareMethod | Method)[]) {
+  protected delete(path: string, ...rest: RestMethodsType) {
     const { method, middlewares } = this.parseMethods(rest);
 
     this.router.delete(
@@ -169,7 +170,7 @@ export default abstract class ApiController {
     );
   }
 
-  private parseMethods(rest: (MiddlewareMethod | Method)[]) {
+  private parseMethods(rest: RestMethodsType) {
     const middlewares = rest.slice(0, -1).map((fn) => this.middleware(fn as MiddlewareMethod));
     const method = this.apiMethod(rest.at(-1)?.bind(this) as Method);
 

@@ -7,7 +7,7 @@ export type ApiRequest<
   P = EmptyObject,
   ReqBody = EmptyObject,
   ReqQuery = EmptyObject,
-> = Request<P, EmptyObject, ReqBody, ReqQuery>;
+> = Request<P, EmptyObject, ReqBody, ReqQuery> & { user?: AuthorizedUser; };
 export type AuthRequest<
   P = EmptyObject,
   ReqBody = EmptyObject,

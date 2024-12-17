@@ -26,4 +26,10 @@ export default class Users extends EntityBase {
 
   @Column('enum', { name: 'role', enum: UserRole, default: UserRole.User })
     role: UserRole;
+
+  @Column('varchar', { name: 'email_confirmation_token', length: 30, select: false })
+    emailConfirmationToken: string;
+
+  @Column('timestamp', { name: 'email_confirmed_at', select: false })
+    emailConfirmedAt: Date;
 }
