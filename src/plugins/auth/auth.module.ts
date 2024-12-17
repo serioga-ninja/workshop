@@ -1,6 +1,7 @@
 import { singleton } from 'tsyringe';
 import AuthEmails from './services/auth-emails';
 import type { Observer } from '../../common/types/observer';
+import UserCacheService from './services/user-cache';
 
 @singleton()
 export default class AuthModule {
@@ -8,8 +9,12 @@ export default class AuthModule {
 
   constructor(
     _authEmails: AuthEmails,
+    _userCacheService: UserCacheService,
   ) {
-    this._observers = [_authEmails];
+    this._observers = [
+      _authEmails,
+      _userCacheService,
+    ];
   }
 
   load() {

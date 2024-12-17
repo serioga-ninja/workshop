@@ -1,17 +1,24 @@
-import { injectable } from 'tsyringe';
+import { EventEmitter } from 'events';
+import { singleton } from 'tsyringe';
+import { ApiError } from '../../../common/classes/errors';
+import JWTService from '../../../common/services/jwt.service';
 import LoggerService from '../../../common/services/logger.service';
 import UsersRepository from '../../users/repositories/users.repository';
-import { ApiError } from '../../../common/classes/errors';
 import PasswordService from '../../users/services/password.service';
-import JWTService from '../../../common/services/jwt.service';
 
 type SignInData = {
   email: string;
   password: string;
 };
 
-@injectable()
-export default class SignIn {
+export type UserSignedInData = {
+  userId: string;
+};
+
+@singleton()
+export default class SignIn extends EventEmitter {
+  public static readonly EVENT_USER_SIGNED_IN = 'userSignedIn';
+
   private readonly _logger: LoggerService;
 
   constructor(
@@ -20,6 +27,8 @@ export default class SignIn {
     private readonly _passwordService: PasswordService,
     private readonly _JWTService: JWTService,
   ) {
+    super();
+
     this._logger = logger.createChild('SignIn');
   }
 
@@ -47,6 +56,10 @@ export default class SignIn {
     this._logger.info(`User with email: ${data.email} successfully signed in`);
 
     const token = this._JWTService.generateToken({ id: user.id }, '360d');
+
+    this.emit(SignIn.EVENT_USER_SIGNED_IN, {
+      userId: user.id,
+    } as UserSignedInData);
 
     return {
       token,

@@ -10,6 +10,7 @@ import MongoConnection from './db/mongo';
 import { createPGConnection } from './db/typeorm';
 import ServerRouter from './router';
 import AuthModule from './plugins/auth/auth.module';
+import RedisConnection from './libs/redis';
 
 @injectable()
 export default class Server {
@@ -18,6 +19,7 @@ export default class Server {
   constructor(
     private readonly _serverRouter: ServerRouter,
     private readonly _mongoConnection: MongoConnection,
+    private readonly _redisConnection: RedisConnection,
     private readonly _authModule: AuthModule,
     private readonly _logger: LoggerService,
   ) {
@@ -34,6 +36,7 @@ export default class Server {
 
     await Promise.all([
       createPGConnection(),
+      this._redisConnection.createConnection(),
       this._mongoConnection.createMongoConnection(),
     ]);
 

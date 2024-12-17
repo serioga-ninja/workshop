@@ -16,9 +16,18 @@ export default class CacheService {
     return this._redisConnection.client.get(key);
   }
 
-  async setJSON(key: string, value: Record<string, any>, expire: number) {
+  /**
+   * Set JSON value with expiration
+   * @param key - Cache key
+   * @param value - Value to set
+   * @param expire - Expiration time in seconds
+   */
+  async setJSON(key: string, value: Record<string, any>, expire?: number) {
     await this._redisConnection.client.json.set(key, '$', value);
-    await this._redisConnection.client.expire(key, expire);
+
+    if (expire) {
+      await this._redisConnection.client.expire(key, expire);
+    }
   }
 
   async getJSON<T>(key: string): Promise<T> {

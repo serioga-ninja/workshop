@@ -19,6 +19,8 @@ export type Config = {
   MAILGUN_API_KEY: string;
   MAILGUN_DOMAIN: string;
   MAILGUN_EMAIL_FROM: string;
+
+  AUTH_SESSION_EXPIRATION_SECONDS: number;
 };
 
 const {
@@ -33,6 +35,7 @@ const {
   MAILGUN_DOMAIN,
   MAILGUN_EMAIL_FROM,
   APP_URL,
+  AUTH_SESSION_EXPIRATION_SECONDS,
 } = process.env;
 
 const config = {
@@ -47,6 +50,7 @@ const config = {
   MAILGUN_DOMAIN: MAILGUN_DOMAIN || '',
   MAILGUN_EMAIL_FROM: MAILGUN_EMAIL_FROM || '',
   APP_URL: APP_URL || '',
+  AUTH_SESSION_EXPIRATION_SECONDS: parseInt(AUTH_SESSION_EXPIRATION_SECONDS || '864000'),
 };
 
 export default config as Config;

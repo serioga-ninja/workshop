@@ -4,13 +4,13 @@ import type { MiddlewareMethod } from '../../../common/classes/api-controller';
 import { ApiError } from '../../../common/classes/errors';
 import JWTService from '../../../common/services/jwt.service';
 import type { ApiRequest } from '../../../common/types/api.types';
-import UsersRepository from '../../users/repositories/users.repository';
+import UserCacheService from '../services/user-cache';
 
 @injectable()
 export default class AuthMiddleware {
   constructor(
     private readonly _jwtService: JWTService,
-    private readonly _userRepo: UsersRepository,
+    private readonly _userCacheService: UserCacheService,
   ) {
 
   }
@@ -30,7 +30,7 @@ export default class AuthMiddleware {
         throw new ApiError('Invalid token');
       }
 
-      const user = await this._userRepo.getAuthUser(data.id);
+      const user = await this._userCacheService.getAuthUserCache(data.id);
 
       if (!user) {
         throw new ApiError('User not found');
