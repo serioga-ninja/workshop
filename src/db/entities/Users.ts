@@ -27,6 +27,9 @@ export default class Users extends EntityBase {
   @Column('enum', { name: 'role', enum: UserRole, default: UserRole.User })
     role: UserRole;
 
+  @Column('uuid', { name: 'avatar_id', nullable: true })
+    avatarId: string | null;
+
   @Column('varchar', { name: 'email_confirmation_token', length: 30, select: false })
     emailConfirmationToken: string;
 

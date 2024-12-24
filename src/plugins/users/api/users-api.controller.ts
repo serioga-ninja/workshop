@@ -1,4 +1,5 @@
 import { injectable } from 'tsyringe';
+import type { UploadedFile } from 'express-fileupload';
 import type { SuccessResponse } from '../../../common/classes/api-controller';
 import EntityController from '../../../common/classes/entity-controller';
 import { IdSchema } from '../../../common/schemas';
@@ -7,7 +8,8 @@ import Middlewares from '../../../common/services/middlewares';
 import type { Users } from '../../../db';
 import { CreateUserSchema } from '../schemas';
 import UsersApiService from '../services/users-api.service';
-import type { CreateUserRequest } from '../types';
+import type { CreateUserRequest, UploadAvatarRequest } from '../types';
+import UserAvatarService from '../services/user-avatar.service';
 
 @injectable()
 export default class UsersApiController extends EntityController<Users> {
@@ -17,6 +19,7 @@ export default class UsersApiController extends EntityController<Users> {
     service: UsersApiService,
     logger: LoggerService,
     private readonly _middlewares: Middlewares,
+    private readonly _userAvatar: UserAvatarService,
   ) {
     super(service, logger);
   }
@@ -40,8 +43,18 @@ export default class UsersApiController extends EntityController<Users> {
       '/:id',
       this.deleteOne,
     );
+    this.post(
+      '/:id/avatar',
+      this.uploadAvatar,
+    );
 
     return super.register();
+  }
+
+  protected async uploadAvatar(req: UploadAvatarRequest) {
+    await this._userAvatar.uploadUserAvatar(req.params.id, req.files?.file as UploadedFile);
+
+    return this.toSuccessResponse({}, 'Avatar uploaded');
   }
 
   protected override async createOne(request: CreateUserRequest): Promise<SuccessResponse<Users>> {
