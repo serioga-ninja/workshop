@@ -18,8 +18,8 @@
 - [x] Add request validations
 - [x] Add middlewares by users for articles
 - [x] Add Sign-in/Sign-up
-- [ ] Send confirmation email
-- [ ] Add session cache
+- [x] Send confirmation email
+- [x] Add session cache
 - [ ] Add user upload avatar to file system
 - [ ] Add user upload avatar to s3
 - [ ] Add emails table with email permissions and approvals

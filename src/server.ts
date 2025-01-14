@@ -4,6 +4,7 @@ import * as express from 'express';
 import helmet from 'helmet';
 import * as http from 'node:http';
 import { injectable } from 'tsyringe';
+import * as fileUpload from 'express-fileupload';
 import LoggerService from './common/services/logger.service';
 import config from './config';
 import MongoConnection from './db/mongo';
@@ -31,6 +32,9 @@ export default class Server {
 
     this.app.use(helmet());
     this.app.use(bodyParser.json());
+    this.app.use(fileUpload({
+      // limits: { fileSize: 50 * 1024 * 1024 },
+    }));
 
     this.app.use('/api', this._serverRouter.register());
 
