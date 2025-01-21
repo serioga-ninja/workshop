@@ -1,24 +1,26 @@
+import 'reflect-metadata';
+
 import * as bodyParser from 'body-parser';
 import type { Express } from 'express';
 import * as express from 'express';
 import helmet from 'helmet';
 import * as http from 'node:http';
-import { injectable } from 'tsyringe';
+import { container, injectable } from 'tsyringe';
 import * as fileUpload from 'express-fileupload';
-import LoggerService from './common/services/logger.service';
-import config from './config';
-import MongoConnection from './db/mongo';
-import { createPGConnection } from './db/typeorm';
-import ServerRouter from './router';
-import AuthModule from './plugins/auth/auth.module';
-import RedisConnection from './libs/redis';
+import LoggerService from '../common/services/logger.service';
+import config from '../config';
+import MongoConnection from '../db/mongo';
+import { createPGConnection } from '../db/typeorm';
+import ApiRouter from './api.router';
+import AuthModule from '../plugins/auth/auth.module';
+import RedisConnection from '../libs/redis';
 
 @injectable()
-export default class Server {
+export default class ApiServer {
   app: Express;
 
   constructor(
-    private readonly _serverRouter: ServerRouter,
+    private readonly _serverRouter: ApiRouter,
     private readonly _mongoConnection: MongoConnection,
     private readonly _redisConnection: RedisConnection,
     private readonly _authModule: AuthModule,
@@ -56,3 +58,6 @@ export default class Server {
     });
   }
 }
+
+const server = container.resolve(ApiServer);
+server.register();

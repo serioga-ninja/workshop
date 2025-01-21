@@ -5,7 +5,8 @@
   "main": "./index",
   "type": "commonjs",
   "scripts": {
-    "start": "nodemon index.ts",
+    "start:api": "nodemon ./src/apps/api.server.ts",
+    "start:static": "nodemon ./src/apps/static.server.ts",
     "migrate": "db-migrate --migrations-dir ./src/db/migrations",
     "migrate:up": "npm run migrate up",
     "migrate:down": "npm run migrate down",

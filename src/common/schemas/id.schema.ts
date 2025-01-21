@@ -4,7 +4,7 @@ export default class IdSchema {
   @IsString() // TODO: Add UUID validation
     id: string;
 
-  constructor(id: string) {
-    this.id = id;
+  constructor(params: { id: string; }) {
+    this.id = params.id;
   }
 }

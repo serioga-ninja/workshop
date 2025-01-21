@@ -8,6 +8,7 @@ dotenv.config({
 
 export type Config = {
   PORT: string;
+  STATIC_PORT: string;
   DATABASE_URL: string;
   NODE_ENV: Environment;
   MONGO_DATABASE_URL: string;
@@ -25,6 +26,7 @@ export type Config = {
 
 const {
   PORT,
+  STATIC_PORT,
   DATABASE_URL,
   NODE_ENV,
   MONGO_DATABASE_URL,
@@ -40,6 +42,7 @@ const {
 
 const config = {
   PORT: PORT || '3000',
+  STATIC_PORT: STATIC_PORT || '3001',
   DATABASE_URL: DATABASE_URL || '',
   NODE_ENV: NODE_ENV || '',
   MONGO_DATABASE_URL: MONGO_DATABASE_URL || '',
