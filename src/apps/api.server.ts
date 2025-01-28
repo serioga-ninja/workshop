@@ -14,6 +14,7 @@ import { createPGConnection } from '../db/typeorm';
 import ApiRouter from './api.router';
 import AuthModule from '../plugins/auth/auth.module';
 import RedisConnection from '../libs/redis';
+import FileUploadService from '../common/services/file-upload';
 
 @injectable()
 export default class ApiServer {
@@ -25,6 +26,7 @@ export default class ApiServer {
     private readonly _redisConnection: RedisConnection,
     private readonly _authModule: AuthModule,
     private readonly _logger: LoggerService,
+    private readonly _fileUpload: FileUploadService,
   ) {
     this.app = express();
   }
@@ -45,6 +47,7 @@ export default class ApiServer {
       this._redisConnection.createConnection(),
       this._mongoConnection.createMongoConnection(),
     ]);
+    await this._fileUpload.init();
 
     return await new Promise<void>(resolve => {
       http.createServer(this.app).listen(

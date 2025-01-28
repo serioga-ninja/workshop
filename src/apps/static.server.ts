@@ -9,6 +9,7 @@ import config from '../config';
 import { createPGConnection } from '../db/typeorm';
 import StaticRouter from './static.router';
 import MongoConnection from '../db/mongo';
+import FileUploadService from '../common/services/file-upload';
 
 @injectable()
 export default class ApiServer {
@@ -18,6 +19,7 @@ export default class ApiServer {
     private readonly _staticRouter: StaticRouter,
     private readonly _mongoConnection: MongoConnection,
     private readonly _logger: LoggerService,
+    private readonly _fileUpload: FileUploadService,
   ) {
     this.app = express();
   }
@@ -31,6 +33,7 @@ export default class ApiServer {
       createPGConnection(),
       this._mongoConnection.createMongoConnection(),
     ]);
+    await this._fileUpload.init();
 
     return await new Promise<void>(resolve => {
       http.createServer(this.app).listen(

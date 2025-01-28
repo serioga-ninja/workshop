@@ -25,6 +25,7 @@
     "before": "readonly"
   },
   "rules": {
+    "no-bitwise": 0,
     "import/no-cycle": "error",
     "default-case": 0,
     "no-await-in-loop": "warn",

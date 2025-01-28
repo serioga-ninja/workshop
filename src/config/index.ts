@@ -1,4 +1,5 @@
 import * as dotenv from 'dotenv';
+import { FileUploadProvider } from '../common/constants';
 import type { Environment } from '../common/constants';
 
 dotenv.config({
@@ -22,6 +23,7 @@ export type Config = {
   MAILGUN_EMAIL_FROM: string;
 
   AUTH_SESSION_EXPIRATION_SECONDS: number;
+  FILE_UPLOAD_PROVIDER: FileUploadProvider;
 };
 
 const {
@@ -38,6 +40,7 @@ const {
   MAILGUN_EMAIL_FROM,
   APP_URL,
   AUTH_SESSION_EXPIRATION_SECONDS,
+  FILE_UPLOAD_PROVIDER,
 } = process.env;
 
 const config = {
@@ -54,6 +57,7 @@ const config = {
   MAILGUN_EMAIL_FROM: MAILGUN_EMAIL_FROM || '',
   APP_URL: APP_URL || '',
   AUTH_SESSION_EXPIRATION_SECONDS: parseInt(AUTH_SESSION_EXPIRATION_SECONDS || '864000'),
+  FILE_UPLOAD_PROVIDER: FILE_UPLOAD_PROVIDER as FileUploadProvider || FileUploadProvider.Local,
 };
 
 export default config as Config;
