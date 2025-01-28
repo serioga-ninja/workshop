@@ -30,6 +30,33 @@
         "!**/node_modules/**"
       ],
       "program": "${workspaceFolder}\\src\\apps\\api.server.ts"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Static",
+      "runtimeExecutable": "node",
+      "outputCapture": "std",
+      "runtimeVersion": "22",
+      "runtimeArgs": [
+        "--no-deprecation",
+        "-r",
+        "ts-node/register",
+        "--stack-size=2000"
+      ],
+      "skipFiles": ["<node_internals>/**"],
+      "internalConsoleOptions": "openOnSessionStart",
+      "cwd": "${workspaceRoot}",
+      "env": {
+        "TS_NODE_PROJECTTS_NODE_PROJECT": "./tsconfig.json",
+        "TS_NODE_FILES": "true",
+        "TS_NODE_PRETTY": "true"
+      },
+      "resolveSourceMapLocations": [
+        "${workspaceFolder}/**",
+        "!**/node_modules/**"
+      ],
+      "program": "${workspaceFolder}\\src\\apps\\static.server.ts"
     }
   ]
 }

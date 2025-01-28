@@ -1,6 +1,15 @@
 import { Column, Entity } from 'typeorm';
 import EntityBase from '../../common/classes/entity-base';
 
+export type ImageMetaData = {
+  width: number;
+  height: number;
+};
+
+type MetaData = ImageMetaData | {
+  [key: string]: any;
+};
+
 @Entity('files')
 export default class Files extends EntityBase {
   @Column('varchar', { length: 255 })
@@ -17,4 +26,7 @@ export default class Files extends EntityBase {
 
   @Column('integer')
     size: number;
+
+  @Column('jsonb', { name: 'meta' })
+    meta: MetaData;
 }
