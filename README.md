@@ -20,11 +20,7 @@
 - [x] Add Sign-in/Sign-up
 - [x] Send confirmation email
 - [x] Add session cache
-- [ ] Add user upload avatar to file system
-- [ ] Add user upload avatar to s3
-- [ ] Add emails table with email permissions and approvals
-- [ ] Add cloudwatch logs
-- [ ] Add server status via sockets
+- [x] Add user upload avatar to file system
+- [x] Add user upload avatar to s3
 - [ ] Add cron jobs
-- [ ] Add article categories
-- [ ] Add article comments
+- [ ] Add server status via sockets

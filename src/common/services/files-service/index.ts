@@ -5,18 +5,25 @@ import config from '../../../config';
 import { FileUploadProvider } from '../../constants';
 import UploadProviderLocal from './upload-provider-local';
 import UploadProviderS3 from './upload-provider-s3';
+import AWSService from '../../../libs/aws';
 
 @singleton()
-export default class FileUploadService {
+export default class FilesService {
   private readonly _uploadProvider: UploadProviderBase;
 
-  constructor(logger: LoggerService) {
+  constructor(
+    logger: LoggerService,
+    awsService: AWSService,
+  ) {
     switch (config.FILE_UPLOAD_PROVIDER) {
       case FileUploadProvider.Local:
         this._uploadProvider = new UploadProviderLocal(logger);
         break;
       case FileUploadProvider.S3:
-        this._uploadProvider = new UploadProviderS3(logger);
+        this._uploadProvider = new UploadProviderS3(
+          logger,
+          awsService,
+        );
         break;
     }
   }
@@ -27,5 +34,9 @@ export default class FileUploadService {
 
   uploadFile(...args: Parameters<UploadProviderBase['uploadFile']>) {
     return this._uploadProvider.uploadFile(...args);
+  }
+
+  getFile(...args: Parameters<UploadProviderBase['getFile']>) {
+    return this._uploadProvider.getFile(...args);
   }
 }

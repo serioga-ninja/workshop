@@ -1,6 +1,7 @@
 import { join } from 'path';
 import { access, constants, mkdir, writeFile } from 'fs/promises';
-import UploadProviderBase, { type UploadFileOptions, type UploadFileResult } from './upload-provider-base';
+import { createReadStream } from 'fs';
+import UploadProviderBase, { type GetFileResult, type UploadFileOptions, type UploadFileResult } from './upload-provider-base';
 import type LoggerService from '../logger.service';
 import { generateRandomString } from '../../helpers/string';
 
@@ -42,5 +43,9 @@ export default class UploadProviderLocal extends UploadProviderBase {
       fileName,
       fullName,
     };
+  }
+
+  override async getFile(location: string): Promise<GetFileResult> {
+    return createReadStream(location);
   }
 }

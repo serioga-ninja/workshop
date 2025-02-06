@@ -24,6 +24,11 @@ export type Config = {
 
   AUTH_SESSION_EXPIRATION_SECONDS: number;
   FILE_UPLOAD_PROVIDER: FileUploadProvider;
+
+  AWS_REGION: string;
+  AWS_S3_BUCKET: string;
+  AWS_ACCESS_KEY_ID: string;
+  AWS_SECRET_ACCESS_KEY: string;
 };
 
 const {
@@ -41,6 +46,10 @@ const {
   APP_URL,
   AUTH_SESSION_EXPIRATION_SECONDS,
   FILE_UPLOAD_PROVIDER,
+  AWS_REGION,
+  AWS_S3_BUCKET,
+  AWS_ACCESS_KEY_ID,
+  AWS_SECRET_ACCESS_KEY,
 } = process.env;
 
 const config = {
@@ -58,6 +67,10 @@ const config = {
   APP_URL: APP_URL || '',
   AUTH_SESSION_EXPIRATION_SECONDS: parseInt(AUTH_SESSION_EXPIRATION_SECONDS || '864000'),
   FILE_UPLOAD_PROVIDER: FILE_UPLOAD_PROVIDER as FileUploadProvider || FileUploadProvider.Local,
+  AWS_REGION: AWS_REGION || '',
+  AWS_S3_BUCKET: AWS_S3_BUCKET || '',
+  AWS_ACCESS_KEY_ID: AWS_ACCESS_KEY_ID || '',
+  AWS_SECRET_ACCESS_KEY: AWS_SECRET_ACCESS_KEY || '',
 };
 
 export default config as Config;

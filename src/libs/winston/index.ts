@@ -2,7 +2,6 @@ import { container } from 'tsyringe';
 import { createLogger, format, Logger, transports } from 'winston';
 import { Environment } from '../../common/constants';
 import config from '../../config';
-import MongoTransport from './transports/mongo.transport';
 
 const { NODE_ENV } = config;
 
@@ -27,7 +26,7 @@ export const consoleTransport = new transports.Console({
 });
 
 const logger = createLogger({
-  transports: [new MongoTransport()],
+  transports: [],
 });
 
 if (NODE_ENV === Environment.Local) {
