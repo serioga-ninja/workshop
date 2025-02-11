@@ -7,6 +7,7 @@
   "scripts": {
     "start:api": "nodemon ./src/apps/api.server.ts",
     "start:static": "nodemon ./src/apps/static.server.ts",
+    "ws:static": "nodemon ./src/apps/ws.server.ts",
     "migrate": "db-migrate --migrations-dir ./src/db/migrations",
     "migrate:up": "npm run migrate up",
     "migrate:down": "npm run migrate down",
@@ -23,6 +24,7 @@
     "@types/jsonwebtoken": "^9.0.7",
     "@types/lodash": "^4.17.13",
     "@types/node": "^22.1.0",
+    "@types/ws": "^8.5.14",
     "@typescript-eslint/eslint-plugin": "^5.50.0",
     "@typescript-eslint/parser": "^5.50.0",
     "eslint": "^8.33.0",
@@ -57,6 +59,7 @@
     "sharp": "^0.33.5",
     "tsyringe": "^4.8.0",
     "typeorm": "^0.3.20",
-    "winston": "^3.15.0"
+    "winston": "^3.15.0",
+    "ws": "^8.18.0"
   }
 }

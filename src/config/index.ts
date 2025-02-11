@@ -11,6 +11,10 @@ export type Config = {
   PORT: string;
   STATIC_PORT: string;
   CRON_PORT: string;
+<<<<<<< HEAD
+=======
+  WS_PORT: string;
+>>>>>>> a3196d9 (Add chat to the project)
   DATABASE_URL: string;
   NODE_ENV: Environment;
   MONGO_DATABASE_URL: string;
@@ -36,6 +40,10 @@ const {
   PORT,
   STATIC_PORT,
   CRON_PORT,
+<<<<<<< HEAD
+=======
+  WS_PORT,
+>>>>>>> a3196d9 (Add chat to the project)
   DATABASE_URL,
   NODE_ENV,
   MONGO_DATABASE_URL,
@@ -58,6 +66,10 @@ const config = {
   PORT: PORT || '3000',
   STATIC_PORT: STATIC_PORT || '3001',
   CRON_PORT: CRON_PORT || '3002',
+<<<<<<< HEAD
+=======
+  WS_PORT: WS_PORT || '3003',
+>>>>>>> a3196d9 (Add chat to the project)
   DATABASE_URL: DATABASE_URL || '',
   NODE_ENV: NODE_ENV || '',
   MONGO_DATABASE_URL: MONGO_DATABASE_URL || '',
