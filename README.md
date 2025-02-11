@@ -22,5 +22,5 @@
 - [x] Add session cache
 - [x] Add user upload avatar to file system
 - [x] Add user upload avatar to s3
-- [ ] Add cron jobs
+- [x] Add cron jobs
 - [ ] Add server status via sockets
